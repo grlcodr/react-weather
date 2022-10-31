@@ -119,7 +119,7 @@ const App = () => {
   const date = new Date();
 
   return(
-    <div className='w-full h-screen bg-weatherBg bg-no-repeat bg-cover bg-center flex flex-col items-center justify-center px-4 lg:px-0'>
+    <div className='w-full h-screen bg-weatherBg bg-no-repeat bg-cover bg-center flex flex-col items-center justify-center px-4 py-6 lg:px-0'>
       {errMsg && <div className='w-full max-w-[90vw] lg:max-w-[450px] bg-[#ef476f] text-white absolute top-2 lg:top-10 p-4 capitalize rounded-md'>{`${errMsg.response.data.message}`}</div>}
       <form className={`${animate ? 'animate-shake' : 'animate-none'} h-16 bg-white/30 w-full max-w-[450px] rounded-full backdrop-blur-[32px] mb-8`}>
         <div className='h-full relative flex items-center justify-between p-2'>
@@ -129,7 +129,7 @@ const App = () => {
           </button>
         </div>
       </form>
-      <div className='w-full max-w-[450px] bg-white/20 min-h-[584px] text-white backdrop-blur-[32px] rounded-[32px] py-12 px-6'>
+      <div className='w-full max-w-[450px] bg-white/20 min-h-[570px] text-white backdrop-blur-[32px] rounded-[32px] py-12 px-6'>
         { loading ? (
           <div className='w-full h-full flex justify-center items-center'>
             <ImSpinner2 className='text-white text-5xl animate-spin' />
@@ -137,7 +137,7 @@ const App = () => {
           ) : (
         <div>
           {}
-          <div className="flex items-center gap-x-5">
+          <div className="flex items-center justify-center gap-x-5">
             <div className='text-[85px]'>{icon}</div>
               <div>
                 <div className='text-2xl font-semibold'>
@@ -149,7 +149,7 @@ const App = () => {
               </div>
           </div>
           {}
-          <div className="my-20">
+          <div className="my-10 md:my-20">
             <div className='flex justify-center items-center'>
               <div className='text-[140px] leading-none font-light'>{parseInt(data.main.temp)}</div>
               <div className='text-4xl'>
@@ -159,13 +159,13 @@ const App = () => {
             <div className='capitalize text-center'>{data.weather[0].description}</div>
           </div>
           {}
-          <div className="max-w-[370px] mx-auto flex flex-col gap-y-6">
-            <div className='flex justify-between'>
-              <div className='flex items-center gap-x-2'>
+          <div className="max-w-[370px] mx-auto flex flex-col gap-y-0 md:gap-y-6">
+            <div className='flex justify-between items-center md:items-start flex-col md:flex-row'>
+              <div className='flex items-center gap-x-2 py-2 md:py-0'>
                 <div className='text-[20px]'>
                   <BsEye />
                 </div>
-                <div>
+                <div className='text-sm md:text-lg'>
                   Visibility <span>{data.visibility / 1000}km</span>
                 </div>
               </div>
@@ -173,7 +173,7 @@ const App = () => {
                 <div className='text-[20px]'>
                   <BsThermometer />
                 </div>
-                <div className='flex'>
+                <div className='flex text-sm md:text-lg'>
                   <p>Feels like</p>
                   <div className=" flex ml-2">
                     {parseInt(data.main.feels_like)}
@@ -182,12 +182,12 @@ const App = () => {
                 </div>
               </div>
             </div>
-            <div className='flex justify-between'>
-              <div className='flex items-center gap-x-2'>
+            <div className='flex justify-between items-center md:items-start flex-col md:flex-row'>
+              <div className='flex items-center gap-x-2 py-2 md:py-0'>
                 <div className='text-[20px]'>
                   <BsWater />
                 </div>
-                <div>
+                <div className='text-sm md:text-lg'>
                   Humidity <span>{data.main.humidity}%</span>
                 </div>
               </div>
@@ -196,7 +196,7 @@ const App = () => {
                   <BsWind />
                 </div>
                 <div>
-                  <div>Wind <span>{data.wind.speed} m/s</span></div>
+                  <div className='text-sm md:text-lg'>Wind <span>{data.wind.speed} m/s</span></div>
                 </div>
               </div>
             </div>
