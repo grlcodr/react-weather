@@ -100,19 +100,19 @@ const App = () => {
         icon = <BsCloudHaze />;
         break;
     case 'Rain':
-      icon = <BsCloudRain />;
+      icon = <BsCloudRain className='text-[#118ab2]' />;
       break;
     case 'Clear':
-      icon = <BsSun />;
+      icon = <BsSun className='text-[#ffd166]' />;
       break;
     case 'Drizzle':
       icon = <BsCloudDrizzle />;
       break;
     case 'Snow':
-      icon = <BsCloudSnow />;
+      icon = <BsCloudSnow className='text-[#118ab2]' />;
       break;
     case 'Thunderstorm':
-      icon = <BsCloudLightningRain />;
+      icon = <BsCloudLightningRain className='text-[#073b4c]' />;
       break;
   }
 
