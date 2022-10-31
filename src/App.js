@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { TbTemperatureCelsius } from 'react-icons/tb';
-import { ImSpinner5 } from 'react-icons/im';
+import { ImSpinner2 } from 'react-icons/im';
 import {
   BsSun,
   BsCloudRain,
@@ -25,6 +25,8 @@ const App = () => {
   const [location, setLocation] = useState('London');
   const [inputVal, setInputVal] = useState('');
   const [animate, setAnimate] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errMsg, setErrMsg] = useState('');
 
   const handleInput = (e) => {
     setInputVal(e.target.value);
@@ -46,23 +48,41 @@ const App = () => {
     }
     input.value = '';
     e.preventDefault();
-  }
+  };
 
   //fetch data 
   useEffect(() => {
+    setLoading(true);
+
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${API_KEY}`;
 
     axios.get(url).then(res => {
-      setData(res.data);
+      //set data after 1s
+      setTimeout(() => {
+        setData(res.data);
+        setLoading(false);
+      }, 1000)
+      
+    }).catch(err => {
+      setLoading(false);
+      setErrMsg(err);
     });
   }, [location]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setErrMsg('')
+    }, 2000);
+    // clear timer
+    return () => clearTimeout(timer);
+  }, [errMsg])
 
   // if data is false show loader
   if (!data) {
     return (
-      <div>
+      <div className='w-full h-screen bg-weatherBg bg-no-repeat bg-cover bg-center flex flex-col justify-center items-center'>
         <div>
-          <ImSpinner5 className='text-5xl animate-spin' />
+          <ImSpinner2 className='text-5xl animate-spin text-white' />
         </div>
       </div>
     )
@@ -100,6 +120,7 @@ const App = () => {
 
   return(
     <div className='w-full h-screen bg-weatherBg bg-no-repeat bg-cover bg-center flex flex-col items-center justify-center px-4 lg:px-0'>
+      {errMsg && <div className='w-full max-w-[90vw] lg:max-w-[450px] bg-[#ef476f] text-white absolute top-2 lg:top-10 p-4 capitalize rounded-md'>{`${errMsg.response.data.message}`}</div>}
       <form className={`${animate ? 'animate-shake' : 'animate-none'} h-16 bg-white/30 w-full max-w-[450px] rounded-full backdrop-blur-[32px] mb-8`}>
         <div className='h-full relative flex items-center justify-between p-2'>
           <input onChange={(e) => handleInput(e)} className='flex-1 bg-transparent outline-none placeholder:text-white text-white text-[15px] font-light pl-6 h-full' type="text" placeholder='Search by city or country'/>
@@ -109,6 +130,11 @@ const App = () => {
         </div>
       </form>
       <div className='w-full max-w-[450px] bg-white/20 min-h-[584px] text-white backdrop-blur-[32px] rounded-[32px] py-12 px-6'>
+        { loading ? (
+          <div className='w-full h-full flex justify-center items-center'>
+            <ImSpinner2 className='text-white text-5xl animate-spin' />
+          </div>
+          ) : (
         <div>
           {}
           <div className="flex items-center gap-x-5">
@@ -175,7 +201,7 @@ const App = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div>)}
       </div>
     </div>
   );
