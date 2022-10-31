@@ -46,7 +46,7 @@ const App = () => {
 
   //set icon based on weather 
   let icon;
-  console.log(data.weather[0].main)
+
   // eslint-disable-next-line default-case
   switch(data.weather[0].main){
     case 'Clouds':
