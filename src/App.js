@@ -23,6 +23,22 @@ const API_KEY = process.env.REACT_APP_API_KEY;
 const App = () => {
   const [data, setData] = useState(null);
   const [location, setLocation] = useState('London');
+  const [inputVal, setInputVal] = useState('');
+
+  const handleInput = (e) => {
+    setInputVal(e.target.value);
+  };
+
+  const handleSumbit = (e) => {
+    // if a location in entered, set location
+    if (inputVal !== '') {
+      setLocation(inputVal)
+    };
+    //clear input text after submit
+    const input = document.querySelector('input');
+    input.value = '';
+    e.preventDefault();
+  }
 
   //fetch data 
   useEffect(() => {
@@ -76,7 +92,14 @@ const App = () => {
 
   return(
     <div className='w-full h-screen bg-weatherBg bg-no-repeat bg-cover bg-center flex flex-col items-center justify-center px-4 lg:px-0'>
-      <form>form</form>
+      <form className='h-16 bg-white/30 w-full max-w-[450px] rounded-full backdrop-blur-[32px] mb-8'>
+        <div className='h-full relative flex items-center justify-between p-2'>
+          <input onChange={(e) => handleInput(e)} className='flex-1 bg-transparent outline-none placeholder:text-white text-white text-[15px] font-light pl-6 h-full' type="text" placeholder='Search by city or country'/>
+          <button onClick={(e) => handleSumbit(e)}className='bg-[#8889a4] hover:bg-[#615c7f] w-20 h-12 rounded-full flex justify-center items-center transition'>
+            <BsSearch className='text-2xl text-white' />
+          </button>
+        </div>
+      </form>
       <div className='w-full max-w-[450px] bg-white/20 min-h-[584px] text-white backdrop-blur-[32px] rounded-[32px] py-12 px-6'>
         <div>
           {}
